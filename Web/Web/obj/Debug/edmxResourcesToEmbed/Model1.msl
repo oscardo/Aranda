@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BDArandaModelStoreContainer" CdmEntityContainer="BDArandaEntities">
+    <EntitySetMapping Name="Rol">
+      <EntityTypeMapping TypeName="BDArandaModel.Rol">
+        <MappingFragment StoreEntitySet="Rol">
+          <ScalarProperty Name="PKRol" ColumnName="PKRol" />
+          <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="BDArandaModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="BDArandaModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="PKUsuario" ColumnName="PKUsuario" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="ClaveHash" ColumnName="ClaveHash" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Edad" ColumnName="Edad" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsuarioRol">
+      <EntityTypeMapping TypeName="BDArandaModel.UsuarioRol">
+        <MappingFragment StoreEntitySet="UsuarioRol">
+          <ScalarProperty Name="PKUsuarioRol" ColumnName="PKUsuarioRol" />
+          <ScalarProperty Name="FKUsuario" ColumnName="FKUsuario" />
+          <ScalarProperty Name="FKRol" ColumnName="FKRol" />
+          <ScalarProperty Name="FKWeb" ColumnName="FKWeb" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Web">
+      <EntityTypeMapping TypeName="BDArandaModel.Web">
+        <MappingFragment StoreEntitySet="Web">
+          <ScalarProperty Name="PKWeb" ColumnName="PKWeb" />
+          <ScalarProperty Name="Web1" ColumnName="Web" />
+          <ScalarProperty Name="Activa" ColumnName="Activa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="CrearUsuario" FunctionName="BDArandaModel.Store.CrearUsuario" />
+    <FunctionImportMapping FunctionImportName="CrearWeb" FunctionName="BDArandaModel.Store.CrearWeb" />
+    <FunctionImportMapping FunctionImportName="EliminarUsuario" FunctionName="BDArandaModel.Store.EliminarUsuario" />
+    <FunctionImportMapping FunctionImportName="EliminarWeb" FunctionName="BDArandaModel.Store.EliminarWeb" />
+    <FunctionImportMapping FunctionImportName="ModificarUsuario" FunctionName="BDArandaModel.Store.ModificarUsuario" />
+    <FunctionImportMapping FunctionImportName="ModificarWeb" FunctionName="BDArandaModel.Store.ModificarWeb" />
+    <FunctionImportMapping FunctionImportName="ReversarEliminarUsuario" FunctionName="BDArandaModel.Store.ReversarEliminarUsuario" />
+    <FunctionImportMapping FunctionImportName="ReversarEliminarWeb" FunctionName="BDArandaModel.Store.ReversarEliminarWeb" />
+    <FunctionImportMapping FunctionImportName="SeleccionWeb" FunctionName="BDArandaModel.Store.SeleccionWeb">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BDArandaModel.SeleccionWeb_Result">
+          <ScalarProperty Name="PKWeb" ColumnName="PKWeb" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="Activa" ColumnName="Activa" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="BDArandaModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="BDArandaModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="BDArandaModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="BDArandaModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BDArandaModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="BDArandaModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BDArandaModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="BDArandaModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="BDArandaModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="UserRol" FunctionName="BDArandaModel.Store.UserRol">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BDArandaModel.UserRol_Result">
+          <ScalarProperty Name="PKRol" ColumnName="PKRol" />
+          <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UsuarioLogin" FunctionName="BDArandaModel.Store.UsuarioLogin" />
+  </EntityContainerMapping>
+</Mapping>

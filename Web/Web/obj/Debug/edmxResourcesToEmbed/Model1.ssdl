@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDArandaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="PKRol" />
+    </Key>
+    <Property Name="PKRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreRol" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Activo" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="PKUsuario" />
+    </Key>
+    <Property Name="PKUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="ClaveHash" Type="binary" MaxLength="64" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar" MaxLength="40" />
+    <Property Name="Apellido" Type="nvarchar" MaxLength="40" />
+    <Property Name="Direccion" Type="nvarchar" MaxLength="60" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="12" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="30" />
+    <Property Name="Edad" Type="tinyint" />
+    <Property Name="Activo" Type="bit" />
+  </EntityType>
+  <EntityType Name="UsuarioRol">
+    <Key>
+      <PropertyRef Name="PKUsuarioRol" />
+    </Key>
+    <Property Name="PKUsuarioRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FKUsuario" Type="int" Nullable="false" />
+    <Property Name="FKRol" Type="int" Nullable="false" />
+    <Property Name="FKWeb" Type="int" />
+    <Property Name="Activo" Type="bit" />
+  </EntityType>
+  <EntityType Name="Web">
+    <Key>
+      <PropertyRef Name="PKWeb" />
+    </Key>
+    <Property Name="PKWeb" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Web" Type="nchar" MaxLength="200" />
+    <Property Name="Activa" Type="bit" />
+  </EntityType>
+  <Association Name="FK_UsuarioRol_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="PKRol" />
+      </Principal>
+      <Dependent Role="UsuarioRol">
+        <PropertyRef Name="FKRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioRol_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="PKUsuario" />
+      </Principal>
+      <Dependent Role="UsuarioRol">
+        <PropertyRef Name="FKUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioRol_Web">
+    <End Role="Web" Type="Self.Web" Multiplicity="0..1" />
+    <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Web">
+        <PropertyRef Name="PKWeb" />
+      </Principal>
+      <Dependent Role="UsuarioRol">
+        <PropertyRef Name="FKWeb" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="CrearUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClaveHash" Type="binary" Mode="In" />
+    <Parameter Name="Nombres" Type="nvarchar" Mode="In" />
+    <Parameter Name="Apellido" Type="nvarchar" Mode="In" />
+    <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
+    <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+    <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+    <Parameter Name="Edad" Type="tinyint" Mode="In" />
+    <Parameter Name="Activo" Type="bit" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="CrearWeb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Web" Type="nvarchar" Mode="In" />
+    <Parameter Name="Activa" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="EliminarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClaveHash" Type="binary" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="EliminarWeb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Web" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="ModificarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClaveHashAnt" Type="binary" Mode="In" />
+    <Parameter Name="ClaveHashNue" Type="binary" Mode="In" />
+    <Parameter Name="Nombres" Type="nvarchar" Mode="In" />
+    <Parameter Name="Apellido" Type="nvarchar" Mode="In" />
+    <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
+    <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+    <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+    <Parameter Name="Edad" Type="tinyint" Mode="In" />
+    <Parameter Name="Activo" Type="bit" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="ModificarWeb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="WebAnt" Type="nvarchar" Mode="In" />
+    <Parameter Name="Web" Type="nvarchar" Mode="In" />
+    <Parameter Name="Activa" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="ReversarEliminarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClaveHash" Type="binary" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="ReversarEliminarWeb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Web" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SeleccionWeb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Todos" Type="int" Mode="In" />
+    <Parameter Name="PKWeb" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="UserRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Seleccion" Type="int" Mode="In" />
+    <Parameter Name="PKRol" Type="int" Mode="In" />
+    <Parameter Name="NombreRol" Type="nvarchar" Mode="In" />
+    <Parameter Name="NombreRolNue" Type="nvarchar" Mode="In" />
+    <Parameter Name="Activo" Type="bit" Mode="In" />
+    <Parameter Name="Salida" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="UsuarioLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+    <Parameter Name="Clave" Type="binary" Mode="In" />
+    <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="BDArandaModelStoreContainer">
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioRol" EntityType="Self.UsuarioRol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Web" EntityType="Self.Web" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_UsuarioRol_Rol" Association="Self.FK_UsuarioRol_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioRol_Usuario" Association="Self.FK_UsuarioRol_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioRol_Web" Association="Self.FK_UsuarioRol_Web">
+      <End Role="Web" EntitySet="Web" />
+      <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
